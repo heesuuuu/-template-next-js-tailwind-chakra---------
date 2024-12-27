@@ -1,56 +1,114 @@
 "use client";
-import Steps from "@/theme/components/steps";
 import React from "react";
-import { useColorModeValue } from "@chakra-ui/color-mode";
-import { Box } from "@chakra-ui/layout";
-import { Button, Flex, Heading } from "@chakra-ui/react";
-import { Step, StepsTheme } from "chakra-ui-steps";
+import {
+    Box,
+    Button,
+    Flex,
+    Image,
+    Step,
+    StepDescription,
+    StepIcon,
+    StepIndicator,
+    StepNumber,
+    StepSeparator,
+    StepStatus,
+    StepTitle,
+    Stepper,
+    useSteps,
+} from "@chakra-ui/react";
 
-export const WadmPage = ({ variant }) => {
-    const { nextStep, prevStep, reset, activeStep } = useSteps({
-        initialStep: 0,
+const steps = [
+    {
+        title: "Step 1",
+        description: "Contact Info",
+        content: "어떤 선택에 대해 당신의 선호도가 더 높은지 판단하기에 유용 ",
+        emotion: (
+            <Image
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Thumbs%20Up%20Light%20Skin%20Tone.png"
+                alt="Thumbs Up Light Skin Tone"
+                width="150"
+                height="150"
+                items-center
+            />
+        ),
+    },
+    { title: "Step 2", description: "Date & Time", content: "This is the content for Step 2",emotion: (
+      <Image src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Hugging%20Face.png" alt="Hugging Face" width="150"
+      height="150"
+      items-center />
+  ) },
+    { title: "Step 3", description: "Select Rooms", content: "This is the content for Step 3",emotion: (
+      <Image
+          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Thumbs%20Up%20Light%20Skin%20Tone.png"
+          alt="Thumbs Up Light Skin Tone"
+          width="150"
+          height="150"
+          items-center
+      />
+  ) },
+];
+
+const WadmPage = () => {
+    const { activeStep, setActiveStep, goToNext, goToPrevious } = useSteps({
+        index: 0, // 기본적으로 첫 번째 단계로 시작
+        count: steps.length, // 총 단계 개수
     });
-    const isLastStep = activeStep === steps.length - 1;
-    const hasCompletedAllSteps = activeStep === steps.length;
-    const bg = useColorModeValue("gray.200", "gray.700");
 
     return (
-        <Flex flexDir="column" width="100%">
-            <Steps variant={variant} colorScheme="blue" activeStep={activeStep}>
-                {StepsTheme.map(({ label }, index) => (
-                    <Step label={label} key={label}>
-                        <Box sx={{ p: 8, bg, my: 8, rounded: "md" }}>
-                            <Heading fontSize="xl" textAlign="center">
-                                Step {index + 1}
-                            </Heading>
+        <Box>
+            {/* Stepper */}
+            <Stepper index={activeStep} colorScheme="blue">
+                {steps.map((step, index) => (
+                    <Step key={index}>
+                        <StepIndicator onClick={() => setActiveStep(index)} cursor="pointer">
+                            <StepStatus complete={<StepIcon />} incomplete={<StepNumber />} active={<StepNumber />} />
+                        </StepIndicator>
+
+                        <Box flexShrink="0">
+                            <StepTitle>{step.title}</StepTitle>
+                            <StepDescription>{step.description}</StepDescription>
                         </Box>
+
+                        <StepSeparator />
                     </Step>
                 ))}
-            </Steps>
-            {hasCompletedAllSteps && (
-                <Box sx={{ bg, my: 8, p: 8, rounded: "md" }}>
-                    <Heading fontSize="xl" textAlign="center">
-                        Woohoo! All steps completed! 🎉
-                    </Heading>
+            </Stepper>
+
+            {/* Step Content */}
+            <div height="200px" width="200px">
+                <div m-auto align="center">
+                    {steps[activeStep].emotion}
+                </div>
+                <Box mt={8} p={4} border="1px solid" borderColor="gray.300" borderRadius="md" textAlign="center">
+                    {steps[activeStep].content}
                 </Box>
-            )}
-            <Flex width="100%" justify="flex-end" gap={4}>
-                {hasCompletedAllSteps ? (
-                    <Button size="sm" onClick={reset}>
-                        Reset
+            </div>
+
+            {/* Navigation Buttons */}
+            <Flex justify="space-between" mt={4}>
+                {/* 이전 버튼 */}
+                <Button
+                    onClick={goToPrevious}
+                    isDisabled={activeStep === 0} // 첫 단계에서 비활성화
+                    variant="outline"
+                    colorScheme="blue"
+                >
+                    Previous
+                </Button>
+
+                {/* 완료 버튼 (마지막 단계일 경우) */}
+                {activeStep === steps.length - 1 ? (
+                    <Button onClick={() => alert("Steps Completed!")} colorScheme="green">
+                        Complete
                     </Button>
                 ) : (
-                    <>
-                        <Button isDisabled={activeStep === 0} onClick={prevStep} size="sm" variant="ghost">
-                            Prev
-                        </Button>
-                        <Button size="sm" onClick={nextStep}>
-                            {isLastStep ? "Finish" : "Next"}
-                        </Button>
-                    </>
+                    // 다음 버튼 (완료 버튼 제외 시)
+                    <Button onClick={goToNext} colorScheme="blue">
+                        Next
+                    </Button>
                 )}
             </Flex>
-        </Flex>
+        </Box>
     );
 };
 
