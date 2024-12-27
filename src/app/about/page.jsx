@@ -1,7 +1,5 @@
 'use client'
 
-import { useState } from 'react'
-import Image from 'next/image'
 import Hero from './components/hero'
 import Timeline from './components/timeline'
 import LogoCloud from './components/logoCloud'
