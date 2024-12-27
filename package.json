@@ -6,8 +6,11 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
+  "homepage": "https://heesuuuu.github.io/-wadm/",
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",
     "@chakra-ui/next-js": "2.4.2",
@@ -24,6 +27,7 @@
     "classnames": "^2.5.1",
     "firebase": "^11.0.2",
     "framer-motion": "^11.15.0",
+    "gh-pages": "^6.2.0",
     "gsap": "^3.12.5",
     "lucide": "^0.461.0",
     "lucide-react": "^0.461.0",
