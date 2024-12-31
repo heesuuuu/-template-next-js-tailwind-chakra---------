@@ -213,8 +213,8 @@ const WadmPage = () => {
                                         width: "100%",
                                         height: "17px",
                                         background: `linear-gradient(to right, #bad149 ${
-                                            (range.value - 1) * 11.11
-                                        }%, lightgray ${(range.value - 1) * 11.11}%)`,
+                                            ((range.value - 1) / 9) * 100
+                                        }%, #c2c2c2 ${((range.value - 1) / 9) * 100}%)`,
                                         borderRadius: "100px",
                                         outline: "none",
                                     }}
@@ -232,10 +232,10 @@ const WadmPage = () => {
                                         position: "absolute",
                                         top: "50%",
                                         left: "0",
-                                        width: "100%",
+                                        width: "99%",
                                         display: "flex",
                                         justifyContent: "space-between",
-                                        padding: "0 2px",
+                                        padding: "0 10px",
                                         pointerEvents: "none",
                                         transform: "translateY(-50%)",
                                     }}
@@ -247,7 +247,12 @@ const WadmPage = () => {
                                                 width: "5px",
                                                 height: "5px",
                                                 borderRadius: "50%",
-                                                backgroundColor: tickIndex + 1 <= range.value ? "" : "#888",
+                                                backgroundColor:
+                                                    tickIndex === 0 || tickIndex === 9
+                                                        ? "none" // 1번과 10번은 숨김
+                                                        : tickIndex + 1 <= range.value
+                                                        ? "" // 활성화된 원
+                                                        : "#D6D6D6", // 비활성화된 원
                                             }}
                                         />
                                     ))}
@@ -260,10 +265,16 @@ const WadmPage = () => {
                                     width="100%"
                                     display="flex"
                                     justifyContent="space-between"
-                                    padding="0 0.5%"
+                                    padding="0 0.07%"
                                 >
                                     {Array.from({ length: 10 }, (_, tickIndex) => (
-                                        <Box key={tickIndex} fontSize="12px" color="gray" textAlign="center" width="20px">
+                                        <Box
+                                            key={tickIndex}
+                                            fontSize="12px"
+                                            color="gray"
+                                            textAlign="center"
+                                            width="20px"
+                                        >
                                             {tickIndex + 1}
                                         </Box>
                                     ))}
