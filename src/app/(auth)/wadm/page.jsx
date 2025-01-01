@@ -7,7 +7,6 @@ import {
     Container,
     Flex,
     IconButton,
-    Image,
     Step,
     StepIndicator,
     StepSeparator,
@@ -16,59 +15,8 @@ import {
     useSteps,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
+import steps from "@/data/stepData";
 import "../../../styles/globals.scss";
-const steps = [
-    {
-        title: "1단계",
-        content: "선택할 사항을 입력해 주세요!",
-        emotion: (
-            <Image
-                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Thumbs%20Up%20Light%20Skin%20Tone.png"
-                alt="Thumbs Up Light Skin Tone"
-                width="150"
-                height="150"
-            />
-        ),
-        inputs: [{ placeholder: "ex) 회사에 남기" }, { placeholder: "ex) 이직하기" }],
-    },
-    {
-        title: "2단계",
-        content: "결정을 내리는 데에 중요하게 생각하는 요인을 입력해 주세요!",
-        emotion: (
-            <Image
-                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Hugging%20Face.png"
-                alt="Hugging Face"
-                width="150"
-                height="150"
-            />
-        ),
-        buttonData: ["성장", "인정", "재미", "돈", "경험", "브랜드", "지속가능성", "아이디어"],
-    },
-    {
-        title: "3단계",
-        content: "선택한 결정요인의 중요도를 측정해 주세요.",
-        emotion: (
-            <Image
-                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Symbols/Up%20Button.webp"
-                alt="Thumbs Up Light Skin Tone"
-                width="150"
-                height="150"
-            />
-        ),
-    },
-    {
-        title: "4단계",
-        content: "선택한 결정요인의 중요도를 측정해 주세요.",
-        emotion: (
-            <Image
-                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Thumbs%20Up%20Light%20Skin%20Tone.png"
-                alt="Thumbs Up Light Skin Tone"
-                width="150"
-                height="150"
-            />
-        ),
-    },
-];
 
 const WadmPage = () => {
     const { activeStep, setActiveStep, goToNext, goToPrevious } = useSteps({
@@ -108,16 +56,16 @@ const WadmPage = () => {
             <Stepper index={activeStep} colorScheme="blue">
                 {steps.map((step, index) => (
                     <Step key={index}>
-                        <Flex direction="column" className="my-4">
-                            <StepIndicator onClick={() => setActiveStep(index)} cursor="pointer">
+                        <Flex direction="column" className="step-container my-4">
+                            <StepIndicator onClick={() => setActiveStep(index)} cursor="pointer" >
                                 <StepStatus
-                                    complete={<Box as="span" />}
-                                    incomplete={<Box as="span" />}
-                                    active={<Box as="span" />}
+                                    complete={<Box as="span" className="step-complete" />}
+                                    incomplete={<Box as="span" className="step-incomplete" />}
+                                    active={<Box as="span" className="step-active" />}
                                 />
                             </StepIndicator>
                         </Flex>
-                        <StepSeparator />
+                        <StepSeparator className="step-separator" />
                     </Step>
                 ))}
             </Stepper>
@@ -213,12 +161,21 @@ const WadmPage = () => {
                         {selectedButtons.length > 0 ? (
                             selectedButtons.map((buttonLabel, i) => (
                                 <Box key={i} my={8} position="relative" className="w-full  border-b-2 pb-20">
-    {/* button name */}
-                                    <Flex justify="center" align="center" className="
-                                    font-semibold my-5 border-2 w-32 h-12 mx-auto rounded-full
-                                    ">
-                                        {buttonLabel}
-                                        </Flex>
+                                    {/* button name */}
+                                    <Flex mx="auto" justify="center">
+                                        <div
+                                            className="
+    font-semibold my-5 w-32 h-12 rounded-l-full rounded-r-none flex justify-center items-center
+    border-t-2 border-b-2 border-l-2
+  "
+                                        >
+                                            {buttonLabel}
+                                        </div>
+                                        <div className="font-semibold my-5 w-32 h-12 rounded-l-none rounded-r-full flex justify-center items-center border-2">
+                                            {rangeInputs[i]?.value || 0}
+                                        </div>
+                                    </Flex>
+
                                     <input
                                         type="range"
                                         min="1"
@@ -226,7 +183,7 @@ const WadmPage = () => {
                                         step="1"
                                         value={rangeInputs[i]?.value || 1}
                                         style={{
-                                            margin:"20ox 0",   
+                                            margin: "20ox 0",
                                             position: "relative",
                                             appearance: "none",
                                             cursor: "pointer",
@@ -295,7 +252,6 @@ const WadmPage = () => {
                                             </Box>
                                         ))}
                                     </Box> */}
-                                    
                                 </Box>
                             ))
                         ) : (
