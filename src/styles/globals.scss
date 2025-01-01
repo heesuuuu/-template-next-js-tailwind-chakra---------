@@ -1,26 +1,22 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-// @import 'main.scss';
+// Tailwind 초기화
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-// @tailwind base;
-// @tailwind components;
-// @tailwind utilities;
+// SCSS 파일 Import
+@import '_reset';
+@import '_fonts';
+@import '_swiper';
+@import '_step';
 
-
-@import 'reset';
-@import 'fonts';
-@import 'swiper';
-
-// css variables
-
+// SCSS 변수 정의
 $white: #fff;
 $black: #000;
 
 $primary-color: #ffc107;
 $secondary-color: #e9e9e9;
 
-
+// CSS 변수 정의
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -42,6 +38,7 @@ $secondary-color: #e9e9e9;
   --hdHeight: 80px;
 }
 
+// 다크 모드 설정
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -49,6 +46,7 @@ $secondary-color: #e9e9e9;
   }
 }
 
+// 기본 스타일
 body {
   color: var(--foreground);
   background: var(--background);

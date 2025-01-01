@@ -1,0 +1,39 @@
+.step-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+// .step-complete {
+//     background-color: #4caf50; /* Green for completed steps */
+//     border-radius: 50%;
+//     width: 20px;
+//     height: 20px;
+// }
+
+// .step-incomplete {
+//     background-color: #f44336; /* Red for incomplete steps */
+//     border-radius: 50%;
+//     width: 20px;
+//     height: 20px;
+// }
+
+.step-active {
+    background-color: #3f51b5; /* Blue for the active step */
+    border: solid 2px #3f51b5;
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+.step-separator {
+    height: 2px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.stepper-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
