@@ -55,7 +55,18 @@ const steps = [
                 height="150"
             />
         ),
-        // inputs: [],
+    },
+    {
+        title: "4단계",
+        content: "선택한 결정요인의 중요도를 측정해 주세요.",
+        emotion: (
+            <Image
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Thumbs%20Up%20Light%20Skin%20Tone.png"
+                alt="Thumbs Up Light Skin Tone"
+                width="150"
+                height="150"
+            />
+        ),
     },
 ];
 
@@ -72,7 +83,6 @@ const WadmPage = () => {
     const [showInput, setShowInput] = useState(false); // 입력 필드 표시 여부
 
     const [rangeInputs, setRangeInputs] = useState([{ value: 0 }]); // 초기 상태
-
     const toggleButtonSelection = (label) => {
         setSelectedButtons((prev) => (prev.includes(label) ? prev.filter((item) => item !== label) : [...prev, label]));
     };
@@ -130,6 +140,7 @@ const WadmPage = () => {
                         </ButtonGroup>
                     </Box>
                 )}
+                {/* button step */}
                 {activeStep === 1 && (
                     <Container className="w-full justify-center mx-1.5">
                         <Flex wrap="wrap" justify="center" gap={4} className="mx-1">
@@ -196,80 +207,116 @@ const WadmPage = () => {
                         </Flex>
                     </Container>
                 )}
+
                 {activeStep === 2 && (
-                    <Box justify="center" className="flex flex-col">
-                        {rangeInputs.map((range, i) => (
-                            <Box key={i} position="relative" width="100%" mb={4}>
-                                <input
-                                    type="range"
-                                    value={range.value}
-                                    min="1"
-                                    max="10"
-                                    step="1"
-                                    style={{
-                                        position: "relative",
-                                        appearance: "none",
-                                        cursor: "pointer",
-                                        width: "100%",
-                                        height: "17px",
-                                        background: `linear-gradient(to right, #bad149 ${
-                                            (range.value - 1) * 11.11
-                                        }%, lightgray ${(range.value - 1) * 11.11}%)`,
-                                        borderRadius: "100px",
-                                        outline: "none",
-                                    }}
-                                    onChange={(e) =>
-                                        setRangeInputs((prev) =>
-                                            prev.map((r, index) =>
-                                                index === i ? { ...range, value: e.target.value } : r
-                                            )
-                                        )
-                                    }
-                                />
-                                {/* input range 내에 있는 점 디자인배치 */}
-                                <div
-                                    style={{
-                                        position: "absolute",
-                                        top: "50%",
-                                        left: "0",
-                                        width: "100%",
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        padding: "0 2px",
-                                        pointerEvents: "none",
-                                        transform: "translateY(-50%)",
-                                    }}
-                                >
-                                    {Array.from({ length: 10 }, (_, tickIndex) => (
-                                        <div
-                                            key={tickIndex}
-                                            style={{
-                                                width: "5px",
-                                                height: "5px",
-                                                borderRadius: "50%",
-                                                backgroundColor: tickIndex + 1 <= range.value ? "" : "#888",
-                                            }}
-                                        />
-                                    ))}
-                                </div>
-                                {/* 눈금선 숫자배치 */}
-                                <Box
-                                    position="absolute"
-                                    top="30px"
-                                    left="0"
-                                    width="100%"
-                                    display="flex"
-                                    justifyContent="space-between"
-                                    padding="0 0.5%"
-                                >
-                                    {Array.from({ length: 10 }, (_, tickIndex) => (
-                                        <Box key={tickIndex} fontSize="12px" color="gray" textAlign="center" width="20px">
-                                            {tickIndex + 1}
-                                        </Box>
-                                    ))}
+                    <Box justify="center" className="flex flex-col h-auto" position="relative">
+                        {selectedButtons.length > 0 ? (
+                            selectedButtons.map((buttonLabel, i) => (
+                                <Box key={i} my={8} position="relative" className="w-full  border-b-2 pb-20">
+    {/* button name */}
+                                    <Flex justify="center" align="center" className="
+                                    font-semibold my-5 border-2 w-32 h-12 mx-auto rounded-full
+                                    ">
+                                        {buttonLabel}
+                                        </Flex>
+                                    <input
+                                        type="range"
+                                        min="1"
+                                        max="10"
+                                        step="1"
+                                        value={rangeInputs[i]?.value || 1}
+                                        style={{
+                                            margin:"20ox 0",   
+                                            position: "relative",
+                                            appearance: "none",
+                                            cursor: "pointer",
+                                            width: "100%",
+                                            height: "17px",
+                                            background: `linear-gradient(to right, #bad149 ${
+                                                ((rangeInputs[i]?.value - 1 || 0) / 9) * 100
+                                            }%, #c2c2c2 ${((rangeInputs[i]?.value - 1 || 0) / 9) * 100}%)`,
+                                            borderRadius: "100px",
+                                            outline: "none",
+                                            zIndex: 2,
+                                        }}
+                                        onChange={(e) => {
+                                            const value = parseInt(e.target.value, 10);
+                                            setRangeInputs((prev) => {
+                                                const updatedInputs = [...prev];
+                                                updatedInputs[i] = { value };
+                                                return updatedInputs;
+                                            });
+                                        }}
+                                    />
+                                    {/* 눈금선 */}
+                                    <Box
+                                        marginTop="5px"
+                                        top="96px"
+                                        width="100%"
+                                        display="flex"
+                                        justifyContent="space-between"
+                                    >
+                                        {Array.from({ length: 10 }, (_, tickIndex) => (
+                                            <Box
+                                                key={tickIndex}
+                                                fontSize="12px"
+                                                color="gray"
+                                                textAlign="center"
+                                                width="20px"
+                                            >
+                                                {tickIndex + 1}
+                                            </Box>
+                                        ))}
+                                    </Box>
+                                    {/* range 눈금선 */}
+                                    {/* <Box
+                                        position="absolute"
+                                        top="90%"
+                                        left="0"
+                                        transform="translateY(-50%)"
+                                        width="100%"
+                                        display="flex"
+                                        justifyContent="space-between"
+                                        pointerEvents="none"
+                                        padding="0 0.07%"
+                                        zIndex={1}
+                                    >
+                                        {Array.from({ length: 10 }, (_, tickIndex) => (
+                                            <Box
+                                                key={tickIndex}
+                                                fontSize="12px"
+                                                height="7px"
+                                                color="#D6D6D6"
+                                                bg={tickIndex + 1 <= rangeInputs[i]?.value ? "#bad149" : "#D6D6D6"} // 동적 색상
+                                                borderRadius="50%" // 원형
+                                    
+                                                width="7px"
+                                            >
+                                            </Box>
+                                        ))}
+                                    </Box> */}
+                                    
                                 </Box>
-                            </Box>
+                            ))
+                        ) : (
+                            <p>Step 2에서 선택된 버튼이 없습니다. 버튼을 선택하세요!</p>
+                        )}
+                    </Box>
+                )}
+
+                {activeStep === 3 && (
+                    <Box justify="center" className="flex flex-col">
+                        {inputs.map((input, i) => (
+                            <input
+                                key={i}
+                                type="text"
+                                placeholder={input.placeholder}
+                                className="border-2 rounded border-gray-300 p-4 m-2"
+                            />
                         ))}
+                        <ButtonGroup className="w-full justify-center my-4">
+                            <IconButton icon={<AddIcon />} isRound={true} onClick={addInputField} />
+                        </ButtonGroup>
                     </Box>
                 )}
             </Box>
